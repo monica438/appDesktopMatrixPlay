@@ -13,8 +13,10 @@
 
 ## 👩‍💻 Autors
 
-- **Mónica Domínguez**  
-- **David Bargados**  
-- **Víctor Prieto**
+- [**Mónica Domínguez**](https://github.com/monica438)
+- [**David Bargados**](https://github.com/barg0s)
+- [**Víctor Prieto**](https://github.com/vipriga06)
 
 ---
+
+
