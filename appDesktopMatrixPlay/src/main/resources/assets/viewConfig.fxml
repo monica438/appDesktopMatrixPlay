@@ -12,17 +12,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-            <AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlConfig">
+<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlConfig">
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #dae8fc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
             <AnchorPane prefHeight="120.0" prefWidth="600.0">
-               <Label alignment="CENTER" layoutX="175.0" layoutY="30" prefHeight="91.0" prefWidth="330.0" style="-fx-font-family: tahoma; -fx-font-size: 72;" text="LOGIN">
+               <Label alignment="CENTER" layoutX="135.0" layoutY="30.0" prefHeight="91.0" prefWidth="330.0" style="-fx-font-family: tahoma; -fx-font-size: 72;" text="LOGIN">
                   <font>
                         <Font size="54.0" />
                   </font>
                </Label>
-               <ImageView fitHeight="130.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+               <ImageView fitHeight="151.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                   <image>
                         <Image url="@logopinpon.png" />
                   </image>
@@ -33,23 +33,8 @@
 
                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
                   <children>
-                     <VBox alignment="CENTER_RIGHT" prefWidth="150.0">
-                        <children>
-                           <Label text="Protocol">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <padding>
-                                 <Insets right="8.0" />
-                              </padding>
-                           </Label>
-                        </children>
-                     </VBox>
-                     <VBox alignment="CENTER_LEFT" prefWidth="200.0">
-                        <children>
-                           <TextField fx:id="txtProtocol" editable="false" text="ws" />
-                        </children>
-                     </VBox>
+                     <VBox alignment="CENTER_RIGHT" prefWidth="150.0" />
+                     <VBox alignment="CENTER_LEFT" prefWidth="200.0" />
                   </children>
                </HBox>
 
@@ -57,7 +42,7 @@
                   <children>
                      <VBox alignment="CENTER_RIGHT" prefWidth="150.0">
                         <children>
-                           <Label style="-fx-font-family: tahoma;" text="Server IP">
+                           <Label style="-fx-font-family: tahoma;" text="URL">
                               <font>
                                  <Font size="14.0" />
                               </font>
@@ -77,23 +62,7 @@
 
                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
                   <children>
-                     <VBox alignment="CENTER_RIGHT" prefWidth="150.0">
-                        <children>
-                           <Label text="Port">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <padding>
-                                 <Insets right="8.0" />
-                              </padding>
-                           </Label>
-                        </children>
-                     </VBox>
-                     <VBox alignment="CENTER_LEFT" prefWidth="200.0">
-                        <children>
-                           <TextField fx:id="txtPort" text="3000" />
-                        </children>
-                     </VBox>
+                     <VBox alignment="CENTER_LEFT" prefWidth="200.0" />
                   </children>
                </HBox>
 

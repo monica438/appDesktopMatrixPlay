@@ -1,6 +1,6 @@
-com\project\Controllers\CtrlConfig.class
-com\project\UtilsViews.class
-com\project\UtilsWS.class
-com\project\Main.class
-com\project\UtilsWS$1.class
-com\project\GestioMissatges.class
+com/project/UtilsWS.class
+com/project/Controllers/CtrlConfig.class
+com/project/UtilsWS$1.class
+com/project/Main.class
+com/project/UtilsViews.class
+com/project/GestioMissatges.class

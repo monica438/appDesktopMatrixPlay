@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.project.Controllers.CtrlConfig;
-
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -88,7 +86,7 @@ public class Main extends Application {
         ctrlConfig.txtMessage.setText("Connecting ...");
 
         pauseDuring(1500, () -> {
-            String url = ctrlConfig.txtProtocol.getText() + "://" + ctrlConfig.txtHost.getText() + ":" + ctrlConfig.txtPort.getText();
+            String url = "wss://" + ctrlConfig.txtHost.getText() + ":443";
             wsClient = UtilsWS.getSharedInstance(url);
 
             wsClient.onMessage(response -> Platform.runLater(() -> GestioMissatges.processMessage(response)));
