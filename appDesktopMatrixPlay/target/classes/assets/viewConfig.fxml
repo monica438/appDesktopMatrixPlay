@@ -54,7 +54,7 @@
                      </VBox>
                      <VBox alignment="CENTER_LEFT" prefWidth="200.0">
                         <children>
-                           <TextField fx:id="txtHost" style="-fx-border-color: black; -fx-border-width: 2;" text="localhost" />
+                           <TextField fx:id="txtHost" promptText="Introdueix l'URL del server aqui" style="-fx-border-color: black; -fx-border-width: 2;" />
                         </children>
                      </VBox>
                   </children>
