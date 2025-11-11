@@ -64,11 +64,11 @@ public class CtrlPlay implements Initializable {
             switch (obj.id) {
                 case "P1": // Pala jugador 1
                     gc.setFill(Color.web(obj.color)); 
-                    drawRect(obj, scaleX, scaleY, 0.2, 0.9);
+                    drawRect(obj, scaleX, scaleY, 0.2, 0.5);
                     break;
                 case "P2": // Pala jugador 2
                     gc.setFill(Color.web(obj.color)); 
-                    drawRect(obj, scaleX, scaleY, 0.2, 0.9); 
+                    drawRect(obj, scaleX, scaleY, 0.2, 0.5); 
                     break;
                 case "B0": // Pelota
                     gc.setFill(Color.web(obj.color)); 

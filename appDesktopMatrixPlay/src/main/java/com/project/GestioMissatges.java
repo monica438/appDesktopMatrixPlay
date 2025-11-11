@@ -94,21 +94,28 @@ public class GestioMissatges {
         }
 
         Platform.runLater(() -> {
-            if (UtilsViews.getActiveView().equals("ViewConfig")) {
+            String activeView = UtilsViews.getActiveView();
+
+            if ("ViewConfig".equals(activeView)) {
                 UtilsViews.setViewAnimating("ViewWait");
             }
-
             if (Main.ctrlWait != null) {
-                if (Main.clients.size() > 0) Main.ctrlWait.txtPlayer0.setText(Main.clients.get(0).name);
-                if (Main.clients.size() > 1){
+                if (Main.clients.size() > 0) {
+                    Main.ctrlWait.txtPlayer0.setText(Main.clients.get(0).name);
+                    Main.ctrlWait.loaderEspera.setVisible(true);
+                }
+
+                if (Main.clients.size() > 1) {
                     Main.ctrlWait.txtPlayer1.setText(Main.clients.get(1).name);
                     Main.ctrlWait.blackPersona.setImage(new Image("assets/icon_negro.png"));
-                } 
+                    Main.ctrlWait.loaderEspera.setVisible(false);
+                    UtilsViews.setViewAnimating("ViewCountdown");
+                }
             }
+
 
             if (Main.ctrlPlay != null && Main.clients.size() > 1) {
                 Main.ctrlPlay.title.setText(Main.clients.get(0).name + " vs " + Main.clients.get(1).name);
-                
             }
 
             Main.j1Points = msgObj.optInt("J1Punts", 0);
@@ -133,11 +140,11 @@ public class GestioMissatges {
         Platform.runLater(() -> {
             final String txtFinal = (value == 0) ? "GO" : String.valueOf(value);
 
-            if (Main.ctrlWait != null && Main.ctrlWait.txtTitle != null) {
-                Main.ctrlWait.txtTitle.setText(txtFinal);
+            if (Main.ctrlCountdown != null && Main.ctrlCountdown.countdownLabel != null) {
+                Main.ctrlCountdown.countdownLabel.setText(txtFinal);
             }
 
-            if (value == 0 && UtilsViews.getActiveView().equals("ViewWait")) {
+            if (value == 0 && "ViewCountdown".equals(UtilsViews.getActiveView())) {
                 UtilsViews.setViewAnimating("ViewPlay");
             }
         });
@@ -149,7 +156,7 @@ public class GestioMissatges {
             .add("name", nom)
             .build();
 
-            ws.safeSend(json.toString());
+        ws.safeSend(json.toString());
     }
 
-    }
+}
