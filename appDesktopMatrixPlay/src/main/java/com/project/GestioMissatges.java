@@ -1,14 +1,12 @@
 package com.project;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.project.Controllers.CtrlPlay;
-import com.project.Controllers.CtrlWait;
-
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -129,20 +127,29 @@ public class GestioMissatges {
         });
     }
 
-private static void handleCountdown(JSONObject msgObj) {
-    int value = msgObj.optInt("value", 0);
+    private static void handleCountdown(JSONObject msgObj) {
+        int value = msgObj.optInt("value", 0);
 
-    Platform.runLater(() -> {
-        final String txtFinal = (value == 0) ? "GO" : String.valueOf(value);
+        Platform.runLater(() -> {
+            final String txtFinal = (value == 0) ? "GO" : String.valueOf(value);
 
-        if (Main.ctrlWait != null && Main.ctrlWait.txtTitle != null) {
-            Main.ctrlWait.txtTitle.setText(txtFinal);
-        }
+            if (Main.ctrlWait != null && Main.ctrlWait.txtTitle != null) {
+                Main.ctrlWait.txtTitle.setText(txtFinal);
+            }
 
-        if (value == 0 && UtilsViews.getActiveView().equals("ViewWait")) {
-            UtilsViews.setViewAnimating("ViewPlay");
-        }
-    });
-}
+            if (value == 0 && UtilsViews.getActiveView().equals("ViewWait")) {
+                UtilsViews.setViewAnimating("ViewPlay");
+            }
+        });
+    }
+    
+    public static void crearEspectador(String nom, UtilsWS ws) {
+        JsonObject json = Json.createObjectBuilder()
+            .add("type", "raspberryEspectador")
+            .add("name", nom)
+            .build();
 
-}
+            ws.safeSend(json.toString());
+    }
+
+    }

@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import com.project.Controllers.CtrlConfig;
 import com.project.Controllers.CtrlPlay;
 import com.project.Controllers.CtrlWait;
@@ -37,7 +35,8 @@ public class Main extends Application {
     public static CtrlConfig ctrlConfig;
     public static CtrlWait ctrlWait;
     public static CtrlPlay ctrlPlay;
-    public static final String filePath = "Desktop/dades/dades.json";
+    public static final String filePath = "dades/dades.json";
+    public static boolean espectador = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,6 +58,7 @@ public class Main extends Application {
     private void initViews() {
         try {
             UtilsViews.parentContainer.setStyle("-fx-font: 14 arial;");
+            Carregar();
             UtilsViews.addView(getClass(), "ViewConfig", "/assets/viewConfig.fxml");
             UtilsViews.addView(getClass(), "ViewWait", "/assets/viewWait.fxml");
             UtilsViews.addView(getClass(), "ViewPlay", "/assets/viewPlay.fxml");
@@ -68,6 +68,21 @@ public class Main extends Application {
         }
     }
 
+
+    private void Carregar() {
+        try {
+            UtilsViews.addView(getClass(), "ViewCarregar", "/assets/viewCarregar.fxml");
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // pausa de 2 segundos
+            pause.setOnFinished(event -> {
+                UtilsViews.setViewAnimating("ViewConfig");
+            });
+            pause.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void configureStage(Stage stage) {
         final int width = 600, height = 500;
         stage.setTitle("JavaFX");
@@ -119,20 +134,29 @@ public class Main extends Application {
         clientName = ctrlConfig.usernameText.getText();
 
         pauseDuring(1500, () -> {
-            String url = "ws://" + ctrlConfig.txtHost.getText() + ":3000";
+            String url = "wss://" + ctrlConfig.txtHost.getText() + ":443";
             wsClient = UtilsWS.getSharedInstance(url);
 
-            // Manejo de mensajes
             wsClient.onMessage(response -> Platform.runLater(() -> GestioMissatges.processMessage(response)));
             wsClient.onError(response -> Platform.runLater(() -> handleError(response)));
-            wsClient.onOpen(response -> Platform.runLater(() -> GestioMissatges.crearJugador(clientName, wsClient)));
+
+            wsClient.onOpen(response -> Platform.runLater(() -> {
+                if (!espectador) {
+                    // Jugador normal
+                    GestioMissatges.crearJugador(clientName, wsClient);
+                } else {
+                    // Solo espectador
+                    GestioMissatges.crearEspectador(clientName, wsClient);
+                }
+            }));
         });
 
         guardarDades();
     }
 
+
     private static void guardarDades() {
-        File carpeta = new File("Desktop/dades");
+        File carpeta = new File("dades");
         if (!carpeta.exists()) carpeta.mkdirs();
 
         if (ctrlConfig == null) return;
@@ -157,4 +181,7 @@ public class Main extends Application {
             pauseDuring(1500, () -> ctrlConfig.txtMessage.setText(""));
         }
     }
+
+
+
 }

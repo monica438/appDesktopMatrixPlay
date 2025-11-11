@@ -3,17 +3,17 @@ package com.project.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.project.GameObject;
+import com.project.Main;
+import com.project.UtilsViews;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import com.project.*;
 
 public class CtrlPlay implements Initializable {
 
