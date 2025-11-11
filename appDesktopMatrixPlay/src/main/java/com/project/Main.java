@@ -10,6 +10,8 @@ import java.util.List;
 import org.json.JSONArray;
 
 import com.project.Controllers.CtrlConfig;
+import com.project.Controllers.CtrlPlay;
+import com.project.Controllers.CtrlWait;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -29,9 +31,12 @@ public class Main extends Application {
     public static UtilsWS wsClient;
     public static String clientName = "";
     public static String rivalName = "";
-
+    public static List<ClientData> clients = new ArrayList<>();
+    public static List<GameObject> objects = new ArrayList<>();
+    public static int j1Points, j2Points;
     public static CtrlConfig ctrlConfig;
-
+    public static CtrlWait ctrlWait;
+    public static CtrlPlay ctrlPlay;
     public static final String filePath = "Desktop/dades/dades.json";
 
     public static void main(String[] args) {
@@ -40,35 +45,23 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        initViews();
+        initViews(); 
         Scene scene = new Scene(UtilsViews.parentContainer);
         stage.setScene(scene);
         configureStage(stage);
+        ctrlConfig = (CtrlConfig) UtilsViews.getController("ViewConfig");
+        ctrlWait = (CtrlWait) UtilsViews.getController("ViewWait");
+        ctrlPlay = (CtrlPlay) UtilsViews.getController("ViewPlay");
+
+        carregarDades();
     }
 
     private void initViews() {
         try {
             UtilsViews.parentContainer.setStyle("-fx-font: 14 arial;");
             UtilsViews.addView(getClass(), "ViewConfig", "/assets/viewConfig.fxml");
-
-            // Obtener controlador primero
-            ctrlConfig = (CtrlConfig) UtilsViews.getController("ViewConfig");
-
-            // Cargar datos desde JSON si existe
-            File jsonFile = new File(filePath);
-            if (jsonFile.exists()) {
-                try (JsonReader reader = Json.createReader(new FileReader(jsonFile))) {
-                    JsonObject jsonObject = reader.readObject();
-                    clientName = jsonObject.getString("nom", "");
-                    String host = jsonObject.getString("link", "");
-
-                    ctrlConfig.usernameText.setText(clientName);
-                    ctrlConfig.txtHost.setText(host);
-                    System.out.println("Datos cargados desde JSON.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            UtilsViews.addView(getClass(), "ViewWait", "/assets/viewWait.fxml");
+            UtilsViews.addView(getClass(), "ViewPlay", "/assets/viewPlay.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,10 +80,28 @@ public class Main extends Application {
         }
     }
 
+    private void carregarDades() {
+        File jsonFile = new File(filePath);
+        if (!jsonFile.exists()) return;
+
+        try (JsonReader reader = Json.createReader(new FileReader(jsonFile))) {
+            JsonObject jsonObject = reader.readObject();
+            clientName = jsonObject.getString("nom", "");
+            String host = jsonObject.getString("link", "");
+
+            if (ctrlConfig != null) {
+                ctrlConfig.usernameText.setText(clientName);
+                ctrlConfig.txtHost.setText(host);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void stop() {
         if (wsClient != null) wsClient.forceExit();
-        System.exit(1);
+        System.exit(0);
     }
 
     public static void pauseDuring(long millis, Runnable action) {
@@ -99,48 +110,47 @@ public class Main extends Application {
         pause.play();
     }
 
-    public static <T> List<T> jsonArrayToList(JSONArray array, Class<T> clazz) {
-        List<T> list = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) list.add(clazz.cast(array.get(i)));
-        return list;
-    }
-
     public static void connectToServer() {
+        if (ctrlConfig == null) return;
+
         ctrlConfig.txtMessage.setTextFill(Color.BLACK);
         ctrlConfig.txtMessage.setText("Connecting ...");
 
-        // Actualizar clientName con el valor de la UI
         clientName = ctrlConfig.usernameText.getText();
 
         pauseDuring(1500, () -> {
-            String url = "wss://" + ctrlConfig.txtHost.getText() + ":443";
+            String url = "ws://" + ctrlConfig.txtHost.getText() + ":3000";
             wsClient = UtilsWS.getSharedInstance(url);
 
+            // Manejo de mensajes
             wsClient.onMessage(response -> Platform.runLater(() -> GestioMissatges.processMessage(response)));
             wsClient.onError(response -> Platform.runLater(() -> handleError(response)));
             wsClient.onOpen(response -> Platform.runLater(() -> GestioMissatges.crearJugador(clientName, wsClient)));
         });
 
-        // Crear carpeta si no existe
-        File carpeta = new File("Desktop/dades");
-        if (!carpeta.exists()) {
-            carpeta.mkdirs();
-        }
+        guardarDades();
+    }
 
-        // Guardar datos en JSON
+    private static void guardarDades() {
+        File carpeta = new File("Desktop/dades");
+        if (!carpeta.exists()) carpeta.mkdirs();
+
+        if (ctrlConfig == null) return;
+
         JsonObject jsonObject = Json.createObjectBuilder()
                 .add("nom", clientName)
                 .add("link", ctrlConfig.txtHost.getText())
                 .build();
         try (JsonWriter writer = Json.createWriter(new FileWriter(filePath))) {
             writer.writeObject(jsonObject);
-            System.out.println("Datos guardados correctamente en JSON: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void handleError(String response) {
+        if (ctrlConfig == null) return;
+
         if (response.contains("Connection refused")) {
             ctrlConfig.txtMessage.setTextFill(Color.RED);
             ctrlConfig.txtMessage.setText("Connection refused");
