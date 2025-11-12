@@ -6,15 +6,15 @@ public class GameObject {
     public String id;
     public int x;
     public int y;
-    public int col;
-    public int row;
+    public int ancho;
+    public int alto;
     public String color; 
-    public GameObject(String id, int x, int y, int cols, int rows,String color) {
+    public GameObject(String id, int x, int y, int ancho, int alto,String color) {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.col = cols;
-        this.row = rows;
+        this.ancho = ancho;
+        this.alto = alto;
         this.color = color;
     }
 
@@ -23,24 +23,26 @@ public class GameObject {
         return this.toJSON().toString();
     }
     
+    // Converteix l'objecte a JSON
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("id", id);
         obj.put("x", x);
         obj.put("y", y);
-        obj.put("cols", col);
-        obj.put("rows", row);
+        obj.put("ancho", ancho);
+        obj.put("alto", alto);
         obj.put("color", color);
         return obj;
     }
 
+    // Crea un GameObjects a partir de JSON
     public static GameObject fromJSON(JSONObject obj) {
         GameObject go = new GameObject(
             obj.optString("id", null),
             obj.optInt("x", 0),
             obj.optInt("y", 0),
-            obj.optInt("cols", 1),
-            obj.optInt("rows", 1),
+            obj.optInt("ancho", 1),
+            obj.optInt("alto", 1),
             obj.optString("color", "gray")
         );
         return go;

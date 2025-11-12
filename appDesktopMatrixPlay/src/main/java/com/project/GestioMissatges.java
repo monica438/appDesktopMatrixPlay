@@ -86,8 +86,8 @@ public class GestioMissatges {
                         o.getString("id"),
                         o.getInt("x"),
                         o.getInt("y"),
-                        o.getInt("cols"),
-                        o.getInt("rows"),
+                        o.getInt("ancho"),
+                        o.getInt("alto"),
                         o.getString("color")
                 ));
             }
@@ -114,12 +114,14 @@ public class GestioMissatges {
             }
 
             if (Main.ctrlPlay != null && Main.clients.size() > 1) {
-                Main.ctrlPlay.title.setText(Main.clients.get(0).name + " vs " + Main.clients.get(1).name);
+                Main.ctrlPlay.title.setText(" vs ");
+                Main.ctrlPlay.j1Nom.setText(Main.clients.get(0).name);
+                Main.ctrlPlay.j2Nom.setText(Main.clients.get(1).name);
 
             }
+                Main.ctrlPlay.j1Punts.setText("Punts: " + String.valueOf(msgObj.optInt("J1Punts", 0)));
+                Main.ctrlPlay.j2Punts.setText("Punts: " + String.valueOf(msgObj.optInt("J2Punts", 0)));
 
-            Main.j1Points = msgObj.optInt("J1Punts", 0);
-            Main.j2Points = msgObj.optInt("J2Punts", 0);
         });
     }
 
@@ -140,11 +142,15 @@ public class GestioMissatges {
         Platform.runLater(() -> {
             final String txtFinal = (value == 0) ? "GO" : String.valueOf(value);
 
-            if (Main.ctrlWait != null && Main.ctrlWait.txtTitle != null) {
-                Main.ctrlWait.txtTitle.setText(txtFinal);
+            if (Main.ctrlCountdown != null && Main.ctrlCountdown.countdownLabel != null) {
+                Main.ctrlCountdown.actualitzarCountdown(txtFinal);
             }
 
-            if (value == 0 && UtilsViews.getActiveView().equals("ViewWait")) {
+            if (UtilsViews.getActiveView().equals("ViewWait") && value > 0){
+                    UtilsViews.setViewAnimating("ViewCountdown");
+
+            }
+            if (value == 0 && UtilsViews.getActiveView().equals("ViewCountdown")) {
                 UtilsViews.setViewAnimating("ViewPlay");
             }
         });

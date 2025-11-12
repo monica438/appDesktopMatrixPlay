@@ -19,6 +19,10 @@ public class CtrlPlay implements Initializable {
 
     @FXML
     public javafx.scene.control.Label title;
+    public javafx.scene.control.Label j1Nom;
+    public javafx.scene.control.Label j2Nom;
+    public javafx.scene.control.Label j1Punts;
+    public javafx.scene.control.Label j2Punts;
 
     @FXML
     private Canvas canvas;
@@ -50,7 +54,6 @@ public class CtrlPlay implements Initializable {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         drawPongObjects();
-        dibuixarPuntuacio();
     }
 
     private void drawPongObjects() {
@@ -72,20 +75,12 @@ public class CtrlPlay implements Initializable {
 }
     private void drawRect(GameObject obj) {
     gc.setFill(Color.web(obj.color));
-    gc.fillRect(obj.x, obj.y, obj.col, obj.row);
+    gc.fillRect(obj.x, obj.y, obj.ancho, obj.alto);
     }
 
-    // Dibuja un círculo usando coordenadas y tamaño en píxeles
     private void drawCircle(GameObject obj) {
         gc.setFill(Color.web(obj.color));
-        gc.fillOval(obj.x, obj.y, obj.col, obj.row);
-    }
-
-    private void dibuixarPuntuacio() {
-        gc.setFill(Color.BLACK);
-        gc.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        String scoreText = Main.j1Points + " - " + Main.j2Points;
-        gc.fillText(scoreText, canvas.getWidth() / 2 - 30, 50);
+        gc.fillOval(obj.x, obj.y, obj.ancho, obj.alto);
     }
 
 
