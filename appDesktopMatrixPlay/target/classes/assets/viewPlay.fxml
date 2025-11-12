@@ -8,14 +8,18 @@
 
 <AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #dae8fc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlPlay">
    <children>
-      <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="TOP_CENTER" prefWidth="600.0" spacing="10" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+
+            <!-- Título centrado -->
             <Label fx:id="title" alignment="CENTER" text="Test game">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Canvas fx:id="canvas" height="25.0" width="25.0" VBox.vgrow="ALWAYS" />
+
+            <!-- Canvas principal para el juego -->
+            <Canvas fx:id="canvas" height="400.0" width="600.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

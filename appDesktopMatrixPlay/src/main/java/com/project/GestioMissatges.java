@@ -99,16 +99,23 @@ public class GestioMissatges {
             }
 
             if (Main.ctrlWait != null) {
-                if (Main.clients.size() > 0) Main.ctrlWait.txtPlayer0.setText(Main.clients.get(0).name);
+                if (Main.clients.size() > 0) {
+                    Main.ctrlWait.txtPlayer0.setText(Main.clients.get(0).name);
+                    Main.ctrlWait.loaderEspera.setVisible(true);
+
+
+                }
                 if (Main.clients.size() > 1){
                     Main.ctrlWait.txtPlayer1.setText(Main.clients.get(1).name);
                     Main.ctrlWait.blackPersona.setImage(new Image("assets/icon_negro.png"));
+                    Main.ctrlWait.loaderEspera.setVisible(false);
+
                 } 
             }
 
             if (Main.ctrlPlay != null && Main.clients.size() > 1) {
                 Main.ctrlPlay.title.setText(Main.clients.get(0).name + " vs " + Main.clients.get(1).name);
-                
+
             }
 
             Main.j1Points = msgObj.optInt("J1Punts", 0);

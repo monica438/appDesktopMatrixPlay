@@ -54,46 +54,31 @@ public class CtrlPlay implements Initializable {
     }
 
     private void drawPongObjects() {
-        if (Main.objects == null) return;
+    if (Main.objects == null) return;
 
-        // Escalado base para el tablero 8x8
-        double scaleX = canvas.getWidth() / 8.0;
-        double scaleY = canvas.getHeight() / 8.0;
-
-        for (GameObject obj : Main.objects) {
-            switch (obj.id) {
-                case "P1": // Pala jugador 1
-                    gc.setFill(Color.web(obj.color)); 
-                    drawRect(obj, scaleX, scaleY, 0.2, 0.9);
-                    break;
-                case "P2": // Pala jugador 2
-                    gc.setFill(Color.web(obj.color)); 
-                    drawRect(obj, scaleX, scaleY, 0.2, 0.9); 
-                    break;
-                case "B0": // Pelota
-                    gc.setFill(Color.web(obj.color)); 
-                    drawCircle(obj, scaleX, scaleY, 0.2);
-                    break;
-                default:
-                    gc.setFill(Color.web(obj.color)); 
-                    drawRect(obj, scaleX, scaleY, 1, 1);
-            }
+    for (GameObject obj : Main.objects) {
+        switch (obj.id) {
+            case "P1": // Pala jugador 1
+            case "P2": // Pala jugador 2
+                drawRect(obj);
+                break;
+            case "B0": // Pelota
+                drawCircle(obj);
+                break;
+            default:
+                drawRect(obj);
         }
     }
-    private void drawRect(GameObject obj, double scaleX, double scaleY, double widthFactor, double heightFactor) {
-        double x = obj.x * scaleX + (scaleX * (1 - widthFactor) / 2);
-        double y = obj.y * scaleY + (scaleY * (1 - heightFactor) / 2);
-        double w = obj.col * scaleX * widthFactor;
-        double h = obj.row * scaleY * heightFactor;
-        gc.fillRect(x, y, w, h);
+}
+    private void drawRect(GameObject obj) {
+    gc.setFill(Color.web(obj.color));
+    gc.fillRect(obj.x, obj.y, obj.col, obj.row);
     }
 
-    private void drawCircle(GameObject obj, double scaleX, double scaleY, double sizeFactor) {
-        double diameterX = obj.col * scaleX * sizeFactor;
-        double diameterY = obj.row * scaleY * sizeFactor;
-        double x = obj.x * scaleX + (obj.col * scaleX - diameterX) / 2;
-        double y = obj.y * scaleY + (obj.row * scaleY - diameterY) / 2;
-        gc.fillOval(x, y, diameterX, diameterY);
+    // Dibuja un círculo usando coordenadas y tamaño en píxeles
+    private void drawCircle(GameObject obj) {
+        gc.setFill(Color.web(obj.color));
+        gc.fillOval(obj.x, obj.y, obj.col, obj.row);
     }
 
     private void dibuixarPuntuacio() {
