@@ -39,6 +39,7 @@ public class Main extends Application {
     public static CtrlCountdown ctrlCountdown;
     public static final String filePath = "dades/dades.json";
     public static boolean espectador = false;
+    public static GestioMoviment gestioMoviment;
 
     public static void main(String[] args) {
         launch(args);
@@ -50,6 +51,8 @@ public class Main extends Application {
         Scene scene = new Scene(UtilsViews.parentContainer);
         stage.setScene(scene);
         configureStage(stage);
+
+        // Controladores
         ctrlConfig = (CtrlConfig) UtilsViews.getController("ViewConfig");
         ctrlWait = (CtrlWait) UtilsViews.getController("ViewWait");
         ctrlPlay = (CtrlPlay) UtilsViews.getController("ViewPlay");
@@ -72,21 +75,19 @@ public class Main extends Application {
         }
     }
 
-
     private void Carregar() {
         try {
             UtilsViews.addView(getClass(), "ViewCarregar", "/assets/viewCarregar.fxml");
 
             PauseTransition pause = new PauseTransition(Duration.seconds(2)); // pausa de 2 segundos
-            pause.setOnFinished(event -> {
-                UtilsViews.setViewAnimating("ViewConfig");
-            });
+            pause.setOnFinished(event -> UtilsViews.setViewAnimating("ViewConfig"));
             pause.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     private void configureStage(Stage stage) {
         final int width = 600, height = 500;
         stage.setTitle("JavaFX");
@@ -146,18 +147,25 @@ public class Main extends Application {
 
             wsClient.onOpen(response -> Platform.runLater(() -> {
                 if (!espectador) {
-                    // Jugador normal
                     GestioMissatges.crearJugador(clientName, wsClient);
                 } else {
-                    // Solo espectador
                     GestioMissatges.crearEspectador(clientName, wsClient);
+                }
+
+                // ✅ Inicializar GestioMoviment una vez conectado el WS
+                gestioMoviment = new GestioMoviment(wsClient);
+
+                // Registrar eventos de teclado
+                Scene scene = UtilsViews.parentContainer.getScene();
+                if (scene != null) {
+                    scene.setOnKeyPressed(evt -> gestioMoviment.keyEvent(evt));
+                    scene.setOnKeyReleased(evt -> gestioMoviment.keyEvent(evt));
                 }
             }));
         });
 
         guardarDades();
     }
-
 
     private static void guardarDades() {
         File carpeta = new File("dades");
@@ -185,7 +193,4 @@ public class Main extends Application {
             pauseDuring(1500, () -> ctrlConfig.txtMessage.setText(""));
         }
     }
-
-
-
 }

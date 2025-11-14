@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 public class GestioMissatges {
 
     public static void crearJugador(String clientName, UtilsWS wsClient) {
-        JSONObject nom = new JSONObject();
+        JSONObject nom = new JSONObject();  
         nom.put("type", "setName");
         nom.put("value", clientName);
         wsClient.safeSend(nom.toString());
