@@ -89,7 +89,7 @@ public class Main extends Application {
     }
 
     private void configureStage(Stage stage) {
-        final int width = 600, height = 500;
+        final int width = 600, height = 400;
         stage.setTitle("JavaFX");
         stage.setMinWidth(width);
         stage.setMinHeight(height);
@@ -139,7 +139,7 @@ public class Main extends Application {
         clientName = ctrlConfig.usernameText.getText();
 
         pauseDuring(1500, () -> {
-            String url = "wSs://" + ctrlConfig.txtHost.getText() + ":443";
+            String url = "ws://" + ctrlConfig.txtHost.getText() + ":3000";
             wsClient = UtilsWS.getSharedInstance(url);
 
             wsClient.onMessage(response -> Platform.runLater(() -> GestioMissatges.processMessage(response)));

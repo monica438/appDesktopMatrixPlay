@@ -36,15 +36,26 @@ public class GameObject {
     }
 
     // Crea un GameObjects a partir de JSON
-    public static GameObject fromJSON(JSONObject obj) {
-        GameObject go = new GameObject(
+    public static GameObject fromJSON(JSONObject obj, int ampladaFinestra, int alcadaFinestra) {
+
+        int xLog = obj.optInt("x", 0);
+        int yLog = obj.optInt("y", 0);
+        int ampleLog = obj.optInt("ancho", 1);
+        int altLog = obj.optInt("alto", 1);
+
+        int xPix = (int) ((xLog / 600f) * ampladaFinestra);
+        int yPix = (int) ((yLog / 400f) * alcadaFinestra);
+        int amplePix = (int) ((ampleLog / 600f) * ampladaFinestra);
+        int altPix = (int) ((altLog / 400f) * alcadaFinestra);
+
+        return new GameObject(
             obj.optString("id", null),
-            obj.optInt("x", 0),
-            obj.optInt("y", 0),
-            obj.optInt("ancho", 1),
-            obj.optInt("alto", 1),
+            xPix,
+            yPix,
+            amplePix,
+            altPix,
             obj.optString("color", "gray")
         );
-        return go;
     }
+
 }

@@ -80,17 +80,13 @@ public class GestioMissatges {
         JSONArray jsonObjects = msgObj.optJSONArray("objectsList");
         Main.objects = new ArrayList<>();
         if (jsonObjects != null) {
+            int ampladaFinestra = (int) UtilsViews.parentContainer.getScene().getWidth();
+            int alcadaFinestra = (int) UtilsViews.parentContainer.getScene().getHeight();
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject o = jsonObjects.getJSONObject(i);
-                Main.objects.add(new GameObject(
-                        o.getString("id"),
-                        o.getInt("x"),
-                        o.getInt("y"),
-                        o.getInt("ancho"),
-                        o.getInt("alto"),
-                        o.getString("color")
-                ));
+                Main.objects.add(GameObject.fromJSON(o, ampladaFinestra, alcadaFinestra));
             }
+
         }
 
         Platform.runLater(() -> {
