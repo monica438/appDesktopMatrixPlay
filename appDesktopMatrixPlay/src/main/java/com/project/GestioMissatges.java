@@ -100,6 +100,7 @@ public class GestioMissatges {
                     Main.ctrlWait.loaderEspera.setVisible(true);
 
 
+
                 }
                 if (Main.clients.size() > 1){
                     Main.ctrlWait.txtPlayer1.setText(Main.clients.get(1).name);
@@ -113,6 +114,7 @@ public class GestioMissatges {
                 Main.ctrlPlay.title.setText(" vs ");
                 Main.ctrlPlay.j1Nom.setText(Main.clients.get(0).name);
                 Main.ctrlPlay.j2Nom.setText(Main.clients.get(1).name);
+
 
             }
                 Main.ctrlPlay.j1Punts.setText("Punts: " + String.valueOf(msgObj.optInt("J1Punts", 0)));
@@ -138,6 +140,7 @@ public class GestioMissatges {
         Platform.runLater(() -> {
             final String txtFinal = (value == 0) ? "GO" : String.valueOf(value);
 
+
             if (Main.ctrlCountdown != null && Main.ctrlCountdown.countdownLabel != null) {
                 Main.ctrlCountdown.actualitzarCountdown(txtFinal);
             }
@@ -148,6 +151,7 @@ public class GestioMissatges {
             }
             if (value == 0 && UtilsViews.getActiveView().equals("ViewCountdown")) {
                 UtilsViews.setViewAnimating("ViewPlay");
+
             }
         });
     }
