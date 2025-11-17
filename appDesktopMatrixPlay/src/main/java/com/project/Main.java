@@ -139,7 +139,7 @@ public class Main extends Application {
         clientName = ctrlConfig.usernameText.getText();
 
         pauseDuring(1500, () -> {
-            String url = "ws://" + ctrlConfig.txtHost.getText() + ":3000";
+            String url = "wss://" + ctrlConfig.txtHost.getText() + ":443";
             wsClient = UtilsWS.getSharedInstance(url);
 
             wsClient.onMessage(response -> Platform.runLater(() -> GestioMissatges.processMessage(response)));
