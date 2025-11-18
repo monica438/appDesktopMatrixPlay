@@ -44,12 +44,52 @@ public class GameObject {
         int altLog = obj.optInt("alto", 1);
 
         int xPix = (int) ((xLog / 600f) * ampladaFinestra);
-        int yPix = (int) ((yLog / 400f) * alcadaFinestra);
+        int yPix = (int) ((yLog / 500f) * alcadaFinestra);
         int amplePix = (int) ((ampleLog / 600f) * ampladaFinestra);
-        int altPix = (int) ((altLog / 400f) * alcadaFinestra);
+        int altPix = (int) ((altLog / 500f) * alcadaFinestra);
 
         return new GameObject(
             obj.optString("id", null),
+            xPix,
+            yPix,
+            amplePix,
+            altPix,
+            obj.optString("color", "gray")
+        );
+    }
+
+
+    public static GameObject fromJSONScaledToGameArea(
+            JSONObject obj,
+            int pantallaAncho,
+            int pantallaAlto,
+            int reservedTop,
+            int logicWidth,
+            int logicHeight) {
+
+        // Datos lógicos (del servidor)
+        int xLog = obj.optInt("x", 0);
+        int yLog = obj.optInt("y", 0);
+        int ampleLog = obj.optInt("ancho", 1);
+        int altLog = obj.optInt("alto", 1);
+
+        // Área jugable real (zona azul)
+        int gameHeight = pantallaAlto - reservedTop;
+
+        // Cálculo de escalado
+        float scaleX = pantallaAncho / (float) logicWidth;
+        float scaleY = gameHeight / (float) logicHeight;
+
+        // Convertir coordenadas a pixel
+        int xPix = (int) (xLog * scaleX);
+        int amplePix = (int) (ampleLog * scaleX);
+
+        // ESCALAR Y dentro del área azul
+        int yPix = reservedTop + (int) (yLog * scaleY);
+        int altPix = (int) (altLog * scaleY);
+
+        return new GameObject(
+            obj.optString("id", ""),
             xPix,
             yPix,
             amplePix,

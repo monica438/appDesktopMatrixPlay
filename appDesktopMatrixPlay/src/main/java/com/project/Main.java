@@ -89,7 +89,7 @@ public class Main extends Application {
     }
 
     private void configureStage(Stage stage) {
-        final int width = 600, height = 400;
+        final int width = 600, height = 500;
         stage.setTitle("JavaFX");
         stage.setMinWidth(width);
         stage.setMinHeight(height);

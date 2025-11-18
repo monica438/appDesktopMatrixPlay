@@ -21,9 +21,10 @@ public class CtrlPlay implements Initializable {
     public javafx.scene.control.Label j2Nom;
     public javafx.scene.control.Label j1Punts;
     public javafx.scene.control.Label j2Punts;
+    
 
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
     private GraphicsContext gc;
 
     private PlayTimer animationTimer;
@@ -40,8 +41,14 @@ public class CtrlPlay implements Initializable {
     }
 
     private void resizeCanvas() {
-        canvas.setWidth(UtilsViews.parentContainer.getWidth());
-        canvas.setHeight(UtilsViews.parentContainer.getHeight());
+        double availableWidth = UtilsViews.parentContainer.getWidth();
+        double availableHeight = UtilsViews.parentContainer.getHeight() - 100; // Restar espacio del marcador
+        
+        canvas.setWidth(availableWidth);
+        canvas.setHeight(availableHeight);
+        
+        // Redibujar inmediatamente cuando cambia el tamaño
+        draw();
     }
 
     private void run(double fps) {

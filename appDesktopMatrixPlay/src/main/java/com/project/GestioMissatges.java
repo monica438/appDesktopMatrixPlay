@@ -77,14 +77,18 @@ public class GestioMissatges {
             }
         }
 
+
+        int ampladaCanvas = (int) Main.ctrlPlay.canvas.getWidth();
+        int alcadaCanvas = (int) Main.ctrlPlay.canvas.getHeight();
+
         JSONArray jsonObjects = msgObj.optJSONArray("objectsList");
         Main.objects = new ArrayList<>();
+        System.out.println("WIDTH" + ampladaCanvas);
+        System.out.println("ALTURA" + alcadaCanvas);
         if (jsonObjects != null) {
-            int ampladaFinestra = (int) UtilsViews.parentContainer.getScene().getWidth();
-            int alcadaFinestra = (int) UtilsViews.parentContainer.getScene().getHeight();
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject o = jsonObjects.getJSONObject(i);
-                Main.objects.add(GameObject.fromJSON(o, ampladaFinestra, alcadaFinestra));
+                Main.objects.add(GameObject.fromJSONScaledToGameArea(o, ampladaCanvas, alcadaCanvas, 0, 600, 500));
             }
 
         }
