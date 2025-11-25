@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.project.Controllers.CtrlConfig;
 import com.project.Controllers.CtrlCountdown;
+import com.project.Controllers.CtrlGameOver;
 import com.project.Controllers.CtrlPlay;
 import com.project.Controllers.CtrlWait;
 
@@ -37,6 +38,7 @@ public class Main extends Application {
     public static CtrlWait ctrlWait;
     public static CtrlPlay ctrlPlay;
     public static CtrlCountdown ctrlCountdown;
+    public static CtrlGameOver ctrlGameOver;
     public static final String filePath = "dades/dades.json";
     public static boolean espectador = false;
     public static GestioMoviment gestioMoviment;
@@ -57,6 +59,7 @@ public class Main extends Application {
         ctrlWait = (CtrlWait) UtilsViews.getController("ViewWait");
         ctrlPlay = (CtrlPlay) UtilsViews.getController("ViewPlay");
         ctrlCountdown = (CtrlCountdown) UtilsViews.getController("ViewCountdown");
+        ctrlGameOver = (CtrlGameOver) UtilsViews.getController("ViewGameOver");
 
         carregarDades();
     }
@@ -69,6 +72,7 @@ public class Main extends Application {
             UtilsViews.addView(getClass(), "ViewCountdown", "/assets/viewCountdown.fxml");
             UtilsViews.addView(getClass(), "ViewWait", "/assets/viewWait.fxml");
             UtilsViews.addView(getClass(), "ViewPlay", "/assets/viewPlay.fxml");
+            UtilsViews.addView(getClass(), "ViewGameOver", "/assets/viewGameOver.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();

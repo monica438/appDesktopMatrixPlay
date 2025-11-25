@@ -46,7 +46,13 @@ public class GestioMissatges {
             case "countdown":
                 handleCountdown(msgObj);
                 break;
+            case "RegistreOK":
+                System.out.println("a");
+                break;
+            case "gameOver":
+                handleGameOver(msgObj);
 
+                break;
             default:
                 System.out.println("Missatge desconegut: " + response);
                 break;
@@ -63,6 +69,23 @@ public class GestioMissatges {
             alert.showAndWait();
         });
     }
+
+    private static void handleGameOver(JSONObject msgObj) {
+        String winner = msgObj.optString("winner", "desconegut");
+        Platform.runLater(() -> {
+            if (UtilsViews.getActiveView().equals("ViewPlay")) {
+                UtilsViews.setViewAnimating("ViewGameOver");
+                if (winner.equals(Main.clientName)){
+                    Main.ctrlGameOver.txtTitle.setText("VICTORIA");
+
+                }else{
+                    Main.ctrlGameOver.txtTitle.setText("DERROTA");
+
+                }
+            }
+        });
+    }
+
 
     private static void handleJocData(JSONObject msgObj) {
         Main.clientName = msgObj.optString("clientName", Main.clientName);
