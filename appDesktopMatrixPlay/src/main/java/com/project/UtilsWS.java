@@ -147,6 +147,8 @@ public class UtilsWS {
         } finally {
             scheduler.shutdownNow();
         }
+        sharedInstance = null;
+        exitRequested.set(false);
     }
 
     public boolean isOpen() {

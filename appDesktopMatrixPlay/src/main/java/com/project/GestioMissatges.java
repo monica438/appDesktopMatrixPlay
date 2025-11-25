@@ -78,7 +78,7 @@ public class GestioMissatges {
                 if (winner.equals(Main.clientName)){
                     Main.ctrlGameOver.txtTitle.setText("VICTORIA");
 
-                }else{
+                }else if (!winner.equals(Main.clientName)){
                     Main.ctrlGameOver.txtTitle.setText("DERROTA");
 
                 }

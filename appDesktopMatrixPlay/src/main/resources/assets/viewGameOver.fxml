@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #dae8fc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlGameOver">
+<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #dae8fc;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlGameOver">
     <children>
         <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             
@@ -26,8 +26,8 @@
             <children>
                <HBox layoutY="344.0" prefHeight="23.0" prefWidth="600.0">
                   <children>
-                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="552.0" text="SORTIR" />
-                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="560.0" text="ENRERE" />
+                     <Button fx:id="btnSortir" mnemonicParsing="false" onAction="#Sortir" prefHeight="25.0" prefWidth="552.0" text="SORTIR" />
+                     <Button fx:id="btnEnrere" mnemonicParsing="false" onAction="#Enrere" prefHeight="25.0" prefWidth="560.0" text="ENRERE" />
                   </children>
                </HBox>
             </children></Pane>
