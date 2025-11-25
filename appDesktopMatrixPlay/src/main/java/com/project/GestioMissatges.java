@@ -73,7 +73,8 @@ public class GestioMissatges {
     private static void handleGameOver(JSONObject msgObj) {
         String winner = msgObj.optString("winner", "desconegut");
         Platform.runLater(() -> {
-            if (UtilsViews.getActiveView().equals("ViewPlay")) {
+            if ("ViewPlay".equals(UtilsViews.getActiveView())){
+
                 UtilsViews.setViewAnimating("ViewGameOver");
                 if (winner.equals(Main.clientName)){
                     Main.ctrlGameOver.txtTitle.setText("VICTORIA");
@@ -106,8 +107,6 @@ public class GestioMissatges {
 
         JSONArray jsonObjects = msgObj.optJSONArray("objectsList");
         Main.objects = new ArrayList<>();
-        System.out.println("WIDTH" + ampladaCanvas);
-        System.out.println("ALTURA" + alcadaCanvas);
         if (jsonObjects != null) {
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject o = jsonObjects.getJSONObject(i);

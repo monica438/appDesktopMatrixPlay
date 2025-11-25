@@ -26,8 +26,8 @@
             <children>
                <HBox layoutY="344.0" prefHeight="23.0" prefWidth="600.0">
                   <children>
-                     <Button fx:id="btnSortir" mnemonicParsing="false" onAction="#Sortir" prefHeight="25.0" prefWidth="552.0" text="SORTIR" />
-                     <Button fx:id="btnEnrere" mnemonicParsing="false" onAction="#Enrere" prefHeight="25.0" prefWidth="560.0" text="ENRERE" />
+                     <Button fx:id="btnSortir" mnemonicParsing="false" onAction="#Sortir" prefHeight="25.0" prefWidth="552.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2; -fx-font-family: tahoma;" text="SORTIR" />
+                     <Button fx:id="btnEnrere" mnemonicParsing="false" onAction="#Enrere" prefHeight="25.0" prefWidth="560.0" style="-fx-font-family: tahoma; -fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="ENRERE" />
                   </children>
                </HBox>
             </children></Pane>

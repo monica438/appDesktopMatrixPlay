@@ -34,45 +34,33 @@ public class CtrlGameOver implements Initializable {
         // 1. Crear el mensaje de desconexión
         JSONObject msg = new JSONObject();
         msg.put("type", "desconecta");
-
-        // 2. Obtener instancia de WebSocket
         UtilsWS ws = UtilsWS.getSharedInstance("wss://" + Main.ctrlConfig.txtHost.getText() + "443");
-
-        // 3. Enviar al servidor si está abierto
         if (ws.isOpen()) {
             ws.safeSend(msg.toString());
         }
-
-        // 4. Evitar reconexión automática y cerrar WebSocket
+        Main.ctrlWait.reset();
         ws.forceExit();
-
-        // 5. Cerrar la aplicación JavaFX
         Platform.exit();
         System.exit(0);
     }
 
-    /** Desconecta al cliente y vuelve a la vista de configuración */
     public void Enrere() {
-        Platform.runLater(() -> {
-            if (UtilsViews.getActiveView().equals("ViewGameOver")) {
-                // Cambiar vista a configuración
-                UtilsViews.setViewAnimating("ViewConfig");
+    Platform.runLater(() -> {
+        if ("ViewGameOver".equals(UtilsViews.getActiveView())) {
+            UtilsViews.setViewAnimating("ViewConfig");
+            JSONObject msg = new JSONObject();
+            msg.put("type", "desconecta");
+            UtilsWS ws = Main.wsClient; 
+            Main.ctrlWait.reset();
 
-                // 1. Crear mensaje de desconexión
-                JSONObject msg = new JSONObject();
-                msg.put("type", "desconecta");
-
-                // 2. Obtener instancia de WebSocket
-                UtilsWS ws = UtilsWS.getSharedInstance("wss://" + Main.ctrlConfig.txtHost.getText() + "443");
-
-                // 3. Enviar mensaje y evitar reconexión automática
-                if (ws.isOpen()) {
-                    ws.safeSend(msg.toString());
-                }
-                ws.forceExit();
-
-                // Nota: no se cierra la app, solo se vuelve a la configuración
+            if (ws != null && ws.isOpen()) {
+                ws.safeSend(msg.toString());
             }
-        });
-    }
+            if (ws != null) {
+                ws.forceExit();
+            }
+        }
+    });
+}
+
 }
