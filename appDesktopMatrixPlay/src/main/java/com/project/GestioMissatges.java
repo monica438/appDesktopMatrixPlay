@@ -87,67 +87,88 @@ public class GestioMissatges {
         });
     }
 
-
     private static void handleJocData(JSONObject msgObj) {
-        Main.clientName = msgObj.optString("clientName", Main.clientName);
 
-        // Actualizar lista de jugadores
-        JSONArray jsonClients = msgObj.optJSONArray("Jugadors");
-        Main.clients = new ArrayList<>();
-        if (jsonClients != null) {
-            for (int i = 0; i < jsonClients.length(); i++) {
-                String name = jsonClients.getString(i);
-                Main.clients.add(new ClientData(name, "gray"));
-            }
+    Main.clientName = msgObj.optString("clientName", Main.clientName);
+
+    // Leer nombres fijos enviados por servidor
+    String j1Name = msgObj.optString("J1Name", null); // VERMELL
+    String j2Name = msgObj.optString("J2Name", null); // NEGRE
+
+    // ---- Actualizar lista de jugadores con color correcto ----
+    JSONArray jsonClients = msgObj.optJSONArray("Jugadors");
+    Main.clients = new ArrayList<>();
+    if (jsonClients != null) {
+        for (int i = 0; i < jsonClients.length(); i++) {
+            String name = jsonClients.getString(i);
+
+            String color = "gray";
+            if (name.equals(j1Name)) color = "VERMELL";
+            if (name.equals(j2Name)) color = "NEGRE";
+
+            Main.clients.add(new ClientData(name, color));
         }
-
-
-        int ampladaCanvas = (int) Main.ctrlPlay.canvas.getWidth();
-        int alcadaCanvas = (int) Main.ctrlPlay.canvas.getHeight();
-
-        JSONArray jsonObjects = msgObj.optJSONArray("objectsList");
-        Main.objects = new ArrayList<>();
-        if (jsonObjects != null) {
-            for (int i = 0; i < jsonObjects.length(); i++) {
-                JSONObject o = jsonObjects.getJSONObject(i);
-                Main.objects.add(GameObject.fromJSONScaledToGameArea(o, ampladaCanvas, alcadaCanvas, 0, 600, 500));
-            }
-
-        }
-
-        Platform.runLater(() -> {
-            if (UtilsViews.getActiveView().equals("ViewConfig")) {
-                UtilsViews.setViewAnimating("ViewWait");
-            }
-
-            if (Main.ctrlWait != null) {
-                if (Main.clients.size() > 0) {
-                    Main.ctrlWait.txtPlayer0.setText(Main.clients.get(0).name);
-                    Main.ctrlWait.loaderEspera.setVisible(true);
-
-
-
-                }
-                if (Main.clients.size() > 1){
-                    Main.ctrlWait.txtPlayer1.setText(Main.clients.get(1).name);
-                    Main.ctrlWait.blackPersona.setImage(new Image("assets/icon_negro.png"));
-                    Main.ctrlWait.loaderEspera.setVisible(false);
-
-                } 
-            }
-
-            if (Main.ctrlPlay != null && Main.clients.size() > 1) {
-                Main.ctrlPlay.title.setText(" vs ");
-                Main.ctrlPlay.j1Nom.setText(Main.clients.get(0).name);
-                Main.ctrlPlay.j2Nom.setText(Main.clients.get(1).name);
-
-
-            }
-                Main.ctrlPlay.j1Punts.setText("Punts: " + String.valueOf(msgObj.optInt("J1Punts", 0)));
-                Main.ctrlPlay.j2Punts.setText("Punts: " + String.valueOf(msgObj.optInt("J2Punts", 0)));
-
-        });
     }
+
+    // ---- Objetos del juego ----
+    int ampladaCanvas = (int) Main.ctrlPlay.canvas.getWidth();
+    int alcadaCanvas = (int) Main.ctrlPlay.canvas.getHeight();
+
+    JSONArray jsonObjects = msgObj.optJSONArray("objectsList");
+    Main.objects = new ArrayList<>();
+    if (jsonObjects != null) {
+        for (int i = 0; i < jsonObjects.length(); i++) {
+            JSONObject o = jsonObjects.getJSONObject(i);
+            Main.objects.add(
+                GameObject.fromJSONScaledToGameArea(
+                    o, ampladaCanvas, alcadaCanvas, 0, 600, 500
+                )
+            );
+        }
+    }
+
+    // ---- ACTUALIZACIÓN DE INTERFAZ ----
+    Platform.runLater(() -> {
+
+        // Cambio de vista desde Config → Wait
+        if (UtilsViews.getActiveView().equals("ViewConfig")) {
+            UtilsViews.setViewAnimating("ViewWait");
+        }
+
+        // ---- ViewWait ----
+        if (Main.ctrlWait != null) {
+
+            // Actualizar nombres individualmente
+            if (j1Name != null) {
+                Main.ctrlWait.txtPlayer0.setText(j1Name); // Vermell
+            }
+            if (j2Name != null) {
+                Main.ctrlWait.txtPlayer1.setText(j2Name); // Negre
+            }
+
+            // Loader visible solo si falta algún jugador
+            if (Main.clients.size() < 2) {
+                Main.ctrlWait.loaderEspera.setVisible(true);
+            } else {
+                Main.ctrlWait.loaderEspera.setVisible(false);
+                Main.ctrlWait.blackPersona.setImage(new Image("assets/icon_negro.png")); 
+            }
+        }
+
+        // ---- ViewPlay ----
+        if (Main.ctrlPlay != null && j1Name != null && j2Name != null) {
+            Main.ctrlPlay.title.setText(" vs ");
+
+            Main.ctrlPlay.j1Nom.setText(j1Name); // Vermell
+            Main.ctrlPlay.j2Nom.setText(j2Name); // Negre
+
+            Main.ctrlPlay.j1Punts.setText("Punts: " + msgObj.optInt("J1Punts", 0));
+            Main.ctrlPlay.j2Punts.setText("Punts: " + msgObj.optInt("J2Punts", 0));
+        }
+    });
+}
+
+
 
     private static void handleError(JSONObject msgObj) {
         String missatge = msgObj.optString("value", "Error desconegut");
