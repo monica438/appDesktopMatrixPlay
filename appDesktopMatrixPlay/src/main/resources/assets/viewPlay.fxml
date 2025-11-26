@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #dae8fc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlPlay">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            
+            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="600.0" spacing="50.0">
+               <children>
+
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="56.0">
+                     <children>
+                        <ImageView fitHeight="74.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon_rojo.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="j1Nom" alignment="CENTER" text="Jugador 1" />
+                        <Label fx:id="j1Punts" alignment="CENTER" text="0" />
+                     </children>
+                  </VBox>
+
+                  <Label fx:id="title" alignment="CENTER" text="VS" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="56.0">
+                     <children>
+                        <ImageView fitHeight="74.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon_negro.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="j2Nom" alignment="CENTER" text="Jugador 2" />
+                        <Label fx:id="j2Punts" alignment="CENTER" text="0" />
+                     </children>
+                  </VBox>
+
+               </children>
+            </HBox>
+            <StackPane VBox.vgrow="ALWAYS">
+               <children>
+
+                  <Canvas fx:id="canvas" />
+                  
+                  <ImageView fx:id="bgImage" fitHeight="171.0" fitWidth="168.0" opacity="0.5" pickOnBounds="false" preserveRatio="true">
+                     <image>
+                        <Image url="@logopinpon.png" />
+                     </image>
+                  </ImageView>
+
+               </children>
+            </StackPane>
+
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
