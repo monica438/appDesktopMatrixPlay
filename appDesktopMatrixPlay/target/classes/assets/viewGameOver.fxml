@@ -5,32 +5,32 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #dae8fc;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlGameOver">
+<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0"  style="-fx-background-color: #dae8fc;"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controllers.CtrlGameOver">
     <children>
-        <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            
-                  <Label fx:id="txtTitle" alignment="CENTER" text="TEXT">
+        <VBox alignment="TOP_CENTER" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <Label fx:id="txtTitle" alignment="CENTER" style="-fx-text-fill: #0b2545;" text="TEXT">
                 <font>
-                    <Font size="32.0" />
+                    <Font size="38.0" />
                 </font>
                 <padding>
-                    <Insets top="50.0" />
+                    <Insets top="70.0" />
                 </padding>
             </Label>
+         <VBox prefHeight="271.0" prefWidth="600.0" />
 
-            <Pane VBox.vgrow="ALWAYS">
-            <children>
-               <HBox layoutY="344.0" prefHeight="23.0" prefWidth="600.0">
-                  <children>
-                     <Button fx:id="btnSortir" mnemonicParsing="false" onAction="#Sortir" prefHeight="25.0" prefWidth="552.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2; -fx-font-family: tahoma;" text="SORTIR" />
-                     <Button fx:id="btnEnrere" mnemonicParsing="false" onAction="#Enrere" prefHeight="25.0" prefWidth="560.0" style="-fx-font-family: tahoma; -fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="ENRERE" />
-                  </children>
-               </HBox>
-            </children></Pane>
+            <HBox alignment="CENTER" spacing="25.0" AnchorPane.bottomAnchor="40.0">
+                <Button fx:id="btnSortir" mnemonicParsing="false" onAction="#Sortir" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2; -fx-font-size: 16px; -fx-font-family: tahoma;">
+                    SORTIR
+                </Button>
+
+                <Button fx:id="btnEnrere" mnemonicParsing="false" onAction="#Enrere" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2; -fx-font-size: 16px; -fx-font-family: tahoma;">
+                    ENRERE
+                </Button>
+            </HBox>
 
         </VBox>
     </children>

@@ -91,11 +91,9 @@ public class GestioMissatges {
 
     Main.clientName = msgObj.optString("clientName", Main.clientName);
 
-    // Leer nombres fijos enviados por servidor
+
     String j1Name = msgObj.optString("J1Name", null); // VERMELL
     String j2Name = msgObj.optString("J2Name", null); // NEGRE
-
-    // ---- Actualizar lista de jugadores con color correcto ----
     JSONArray jsonClients = msgObj.optJSONArray("Jugadors");
     Main.clients = new ArrayList<>();
     if (jsonClients != null) {
@@ -110,7 +108,6 @@ public class GestioMissatges {
         }
     }
 
-    // ---- Objetos del juego ----
     int ampladaCanvas = (int) Main.ctrlPlay.canvas.getWidth();
     int alcadaCanvas = (int) Main.ctrlPlay.canvas.getHeight();
 
@@ -121,32 +118,24 @@ public class GestioMissatges {
             JSONObject o = jsonObjects.getJSONObject(i);
             Main.objects.add(
                 GameObject.fromJSONScaledToGameArea(
-                    o, ampladaCanvas, alcadaCanvas, 0, 600, 500
-                )
+                    o, ampladaCanvas, alcadaCanvas, 0, 600, 400)
             );
         }
     }
 
-    // ---- ACTUALIZACIÓN DE INTERFAZ ----
     Platform.runLater(() -> {
 
-        // Cambio de vista desde Config → Wait
         if (UtilsViews.getActiveView().equals("ViewConfig")) {
             UtilsViews.setViewAnimating("ViewWait");
         }
 
-        // ---- ViewWait ----
         if (Main.ctrlWait != null) {
-
-            // Actualizar nombres individualmente
             if (j1Name != null) {
                 Main.ctrlWait.txtPlayer0.setText(j1Name); // Vermell
             }
             if (j2Name != null) {
                 Main.ctrlWait.txtPlayer1.setText(j2Name); // Negre
             }
-
-            // Loader visible solo si falta algún jugador
             if (Main.clients.size() < 2) {
                 Main.ctrlWait.loaderEspera.setVisible(true);
             } else {
@@ -155,7 +144,6 @@ public class GestioMissatges {
             }
         }
 
-        // ---- ViewPlay ----
         if (Main.ctrlPlay != null && j1Name != null && j2Name != null) {
             Main.ctrlPlay.title.setText(" vs ");
 

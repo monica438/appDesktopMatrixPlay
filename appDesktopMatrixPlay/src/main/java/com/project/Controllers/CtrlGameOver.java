@@ -26,12 +26,10 @@ public class CtrlGameOver implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Inicialización si es necesaria
+
     }
 
-    /** Desconecta al cliente y cierra la aplicación */
     public void Sortir() {
-        // 1. Crear el mensaje de desconexión
         JSONObject msg = new JSONObject();
         msg.put("type", "desconecta");
         UtilsWS ws = UtilsWS.getSharedInstance("wss://" + Main.ctrlConfig.txtHost.getText() + "443");
@@ -45,22 +43,21 @@ public class CtrlGameOver implements Initializable {
     }
 
     public void Enrere() {
-    Platform.runLater(() -> {
-        if ("ViewGameOver".equals(UtilsViews.getActiveView())) {
-            UtilsViews.setViewAnimating("ViewConfig");
-            JSONObject msg = new JSONObject();
-            msg.put("type", "desconecta");
-            UtilsWS ws = Main.wsClient; 
-            Main.ctrlWait.reset();
-
-            if (ws != null && ws.isOpen()) {
-                ws.safeSend(msg.toString());
+        Platform.runLater(() -> {
+            if ("ViewGameOver".equals(UtilsViews.getActiveView())) {
+                JSONObject msg = new JSONObject();
+                msg.put("type", "desconecta");
+                UtilsWS ws = Main.wsClient; 
+                Main.ctrlWait.reset();
+                if (ws != null && ws.isOpen()) {
+                    ws.safeSend(msg.toString());
+                }
+                if (ws != null) {
+                    ws.forceExit(); 
+                }
+                UtilsViews.setViewAnimating("ViewConfig");
             }
-            if (ws != null) {
-                ws.forceExit();
-            }
-        }
-    });
-}
+        });
+    }
 
 }

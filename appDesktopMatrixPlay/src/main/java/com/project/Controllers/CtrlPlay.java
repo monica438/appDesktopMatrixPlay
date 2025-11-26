@@ -42,12 +42,10 @@ public class CtrlPlay implements Initializable {
 
     private void resizeCanvas() {
         double availableWidth = UtilsViews.parentContainer.getWidth();
-        double availableHeight = UtilsViews.parentContainer.getHeight() - 100; // Restar espacio del marcador
+        double availableHeight = UtilsViews.parentContainer.getHeight() - 100;
         
         canvas.setWidth(availableWidth);
         canvas.setHeight(availableHeight);
-        
-        // Redibujar inmediatamente cuando cambia el tamaño
         draw();
     }
 
@@ -59,20 +57,16 @@ public class CtrlPlay implements Initializable {
         double width = canvas.getWidth();
         double height = canvas.getHeight();
 
-        // Limpiar canvas
         gc.clearRect(0, 0, width, height);
 
-        // Dibujar borde
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(3);
         gc.strokeRect(0, 0, width, height);
 
-        // Dibujar línea vertical en mitad
         gc.setStroke(Color.RED);
         gc.setLineWidth(2);
         gc.strokeLine(width / 2, 0, width / 2, height);
 
-        // Dibujar los objetos del juego
         drawPongObjects();
     }
 

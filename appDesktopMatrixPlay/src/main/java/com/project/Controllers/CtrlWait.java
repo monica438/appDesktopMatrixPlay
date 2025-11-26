@@ -4,6 +4,8 @@ package com.project.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.project.Main;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -32,6 +34,8 @@ public class CtrlWait implements Initializable {
         txtPlayer1.setText("?");
         blackPersona.setImage(new Image(getClass().getResource("/icon_gris.png").toExternalForm()
         ));
+        Main.ctrlConfig.txtMessage.setText("");
+
     }
 
 }
